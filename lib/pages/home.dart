@@ -1,3 +1,4 @@
+import 'package:first_app/pages/account.dart';
 import 'package:first_app/pages/coins_list.dart';
 import 'package:first_app/pages/favorites.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _HomeState extends State<Home> {
         children: const [
           CoinsList(),
           Favorites(),
+          Account(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -41,6 +43,7 @@ class _HomeState extends State<Home> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Coins'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Account'),
         ],
         onTap: (page) {
           pc.animateToPage(page, duration: const Duration(milliseconds: 400), curve: Curves.ease);
