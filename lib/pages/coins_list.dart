@@ -1,3 +1,4 @@
+import 'package:first_app/configs/app_settings.dart';
 import 'package:first_app/models/coin.dart';
 import 'package:first_app/pages/coin_details.dart';
 import 'package:first_app/repositories/coin_repository.dart';
@@ -14,15 +15,46 @@ class CoinsList extends StatefulWidget {
 }
 
 class _CoinsListState extends State<CoinsList> {
-  NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
+  // NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
+  late NumberFormat formatCurrency;
+  late Map<String, String> locale;
   final coins = CoinRepository.coins;
   List<Coin> selectedCoins = [];
   late FavoriteRepository favorites;
+
+  readNumberFormat() {
+    locale = context.watch<AppSettings>().locale;
+    formatCurrency =
+        NumberFormat.currency(locale: locale['locale'], name: locale['name']);
+  }
+
+  changeLanguageButton() {
+    final changeLocale = locale['locale'] == 'pt_BR' ? 'en_US' : 'pt_BR';
+    final changeName = locale['name'] == 'R\$' ? '\$' : 'R\$';
+
+    return PopupMenuButton(
+      icon: Icon(Icons.language),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+            child: ListTile(
+          leading: Icon(Icons.swap_vert),
+          title: Text('Change to $changeLocale'),
+          onTap: () {
+            context.read<AppSettings>().setLocale(changeLocale, changeName);
+            Navigator.pop(context);
+          },
+        )),
+      ],
+    );
+  }
 
   customAppBar() {
     return selectedCoins.isEmpty
         ? AppBar(
             title: const Text('Crypto Coins'),
+            actions: [
+              changeLanguageButton(),
+            ],
           )
         : AppBar(
             leading: IconButton(
@@ -64,6 +96,7 @@ class _CoinsListState extends State<CoinsList> {
 
   @override
   Widget build(BuildContext context) {
+    readNumberFormat();
     favorites = context.watch<FavoriteRepository>();
 
     return Scaffold(
@@ -93,7 +126,7 @@ class _CoinsListState extends State<CoinsList> {
                   )
               ],
             ),
-            trailing: Text(real.format(coins[index].price)),
+            trailing: Text(formatCurrency.format(coins[index].price)),
             selected: selectedCoins.contains(coins[index]),
             selectedTileColor: Colors.deepPurple[50],
             onLongPress: () => setState(() {
