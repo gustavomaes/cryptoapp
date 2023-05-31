@@ -1,6 +1,7 @@
 import 'package:first_app/pages/account.dart';
 import 'package:first_app/pages/coins_list.dart';
 import 'package:first_app/pages/favorites.dart';
+import 'package:first_app/pages/wallet.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -35,14 +36,17 @@ class _HomeState extends State<Home> {
         children: const [
           CoinsList(),
           Favorites(),
+          Wallet(),
           Account(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Coins'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet), label: 'Walletr'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Account'),
         ],
         onTap: (page) {
