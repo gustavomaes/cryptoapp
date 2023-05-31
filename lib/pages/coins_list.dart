@@ -118,7 +118,8 @@ class _CoinsListState extends State<CoinsList> {
             title: Row(
               children: [
                 Text(coins[index].name),
-                if (favorites.list.contains(coins[index]))
+                if (favorites.list.any(
+                    (favorite) => favorite.acronym == coins[index].acronym))
                   const Icon(
                     Icons.circle,
                     color: Colors.red,
