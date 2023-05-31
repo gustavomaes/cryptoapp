@@ -22,11 +22,11 @@ class AccountRepository extends ChangeNotifier {
   _getBalance() async {
     db = await DB.instance.database;
     List account = await db.query('account', limit: 1);
-    _balance = account.first['ballance'];
+    _balance = account.first['balance'];
     notifyListeners();
   }
 
-  setSaldo(double value) async {
+  setBalance(double value) async {
     db = await DB.instance.database;
     db.update('account', {
       'balance': value

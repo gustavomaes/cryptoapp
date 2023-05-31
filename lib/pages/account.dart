@@ -42,7 +42,7 @@ class _AccountState extends State<Account> {
         TextButton(
           onPressed: () {
             if (form.currentState!.validate()) {
-              account.setSaldo(double.parse(inputController.text));
+              account.setBalance(double.parse(inputController.text));
               Navigator.pop(context);
             }
           },
