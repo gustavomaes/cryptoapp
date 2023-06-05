@@ -1,12 +1,14 @@
 import 'package:first_app/models/coin.dart';
+import 'package:first_app/repositories/account_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CoinDetails extends StatefulWidget {
   final Coin coin;
   const CoinDetails({super.key, required this.coin});
-
+  
   @override
   State<CoinDetails> createState() => _CoinDetailsState();
 }
@@ -16,10 +18,12 @@ class _CoinDetailsState extends State<CoinDetails> {
   final _form = GlobalKey<FormState>();
   final _value = TextEditingController();
   double amount = 0;
+  late AccountRepository account;
 
-  buy() {
+  buy() async {
     if (_form.currentState!.validate()) {
-      // save
+      await account.buy(widget.coin, double.parse(_value.text));
+
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('successful purchase'))
@@ -29,6 +33,8 @@ class _CoinDetailsState extends State<CoinDetails> {
 
   @override
   Widget build(BuildContext context) {
+    account = context.watch<AccountRepository>();
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.coin.name),
@@ -97,6 +103,8 @@ class _CoinDetailsState extends State<CoinDetails> {
                     return 'Value is required.';
                   } else if (double.parse(value) < 50) {
                     return 'Min value is U\$50.00';
+                  } else if (double.parse(value) >= account.balance) {
+                    return 'No founds';
                   }
                   return null;
                 },

@@ -109,7 +109,7 @@ class _WalletState extends State<Wallet> {
       return PieChartSectionData(
         color: color,
         value: percentage,
-        title: '${percentage}',
+        title: '${percentage.toStringAsFixed(0)}%',
         radius: radius,
         titleStyle: TextStyle(
           fontSize: fontSize,

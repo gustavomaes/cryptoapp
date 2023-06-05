@@ -49,7 +49,7 @@ class DB {
       type TEXT,
       coin TEXT,
       acronym TEXT,
-      price REAL
+      price REAL,
       amount TEXT
     );
   ''';
