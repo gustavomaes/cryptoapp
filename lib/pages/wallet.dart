@@ -172,7 +172,7 @@ class _WalletState extends State<Wallet> {
         title: Text(position.coin.name),
         subtitle: Text(date.format(position.date)),
         trailing:
-            Text(formatCurrency.format(position.coin.price / position.amount)),
+            Text(formatCurrency.format(position.coin.price * position.amount)),
       ));
       operations.add(const Divider());
     }
