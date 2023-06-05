@@ -56,6 +56,7 @@ class _WalletState extends State<Wallet> {
               ),
             ),
             loadGraph(),
+            loadHistory(),
           ],
         ),
       ),
@@ -159,5 +160,24 @@ class _WalletState extends State<Wallet> {
               ),
             ],
           );
+  }
+
+  loadHistory() {
+    final history = account.history;
+    final date = DateFormat('dd/MM/yyyy - hh:mm');
+    List<Widget> operations = [];
+
+    for (var position in history) {
+      operations.add(ListTile(
+        title: Text(position.coin.name),
+        subtitle: Text(date.format(position.date)),
+        trailing:
+            Text(formatCurrency.format(position.coin.price / position.amount)),
+      ));
+      operations.add(const Divider());
+    }
+    ;
+
+    return Column(children: operations);
   }
 }
