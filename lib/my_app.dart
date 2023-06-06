@@ -1,4 +1,5 @@
 import 'package:first_app/pages/home.dart';
+import 'package:first_app/widgets/auth_check.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: Home(),
+      home: const AuthCheck(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:first_app/configs/app_settings.dart';
 import 'package:first_app/repositories/account_repository.dart';
+import 'package:first_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -40,13 +41,13 @@ class _AccountState extends State<Account> {
           child: Text("cancel"),
         ),
         TextButton(
-          onPressed: () {
-            if (form.currentState!.validate()) {
-              account.setBalance(double.parse(inputController.text));
-              Navigator.pop(context);
-            }
-          },
-          child: Text('save')),
+            onPressed: () {
+              if (form.currentState!.validate()) {
+                account.setBalance(double.parse(inputController.text));
+                Navigator.pop(context);
+              }
+            },
+            child: Text('save')),
       ],
     );
 
@@ -79,7 +80,30 @@ class _AccountState extends State<Account> {
                 icon: const Icon(Icons.edit),
                 onPressed: updateBalance,
               ),
-            )
+            ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                ),
+                onPressed: () => context.read<AuthService>().logout(),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.logout),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
